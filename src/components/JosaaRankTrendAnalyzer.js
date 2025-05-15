@@ -313,7 +313,7 @@ const JosaaRankTrendAnalyzer = () => {
   const [compareMode, setCompareMode] = useState(false);
   
   // Colors for different lines
-  const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#6366f1', '#14b8a6'];
+  const colors = ['#FF5733', '#33A8FF', '#33FF57', '#FF33A8', '#A833FF', '#FFDD33', '#FF3333', '#33FFDD'];
 
   // Load and parse the CSV data
   useEffect(() => {
@@ -788,18 +788,18 @@ const JosaaRankTrendAnalyzer = () => {
                       type="monotone"
                       dataKey="openingRank"
                       name="Opening Rank"
-                      stroke="#3b82f6"
+                      stroke="#FF5733"
                       activeDot={{ r: 8 }}
-                      strokeWidth={2}
+                      strokeWidth={3}
                       connectNulls
                     />
                     <Line
                       type="monotone"
                       dataKey="closingRank"
                       name="Closing Rank"
-                      stroke="#10b981"
+                      stroke="#33A8FF"
                       activeDot={{ r: 8 }}
-                      strokeWidth={2}
+                      strokeWidth={3}
                       connectNulls
                     />
                   </LineChart>
@@ -892,6 +892,7 @@ const JosaaRankTrendAnalyzer = () => {
                           stroke={program.color}
                           strokeDasharray="3 3"
                           activeDot={{ r: 6 }}
+                          strokeWidth={3}
                           connectNulls
                         />
                         <Line
@@ -900,6 +901,7 @@ const JosaaRankTrendAnalyzer = () => {
                           name={`${program.shortName} (Closing)`}
                           stroke={program.color}
                           activeDot={{ r: 6 }}
+                          strokeWidth={3}
                           connectNulls
                         />
                       </React.Fragment>
@@ -922,7 +924,6 @@ const JosaaRankTrendAnalyzer = () => {
                     <th style={styles.tableHeaderCell}>Round 3</th>
                     <th style={styles.tableHeaderCell}>Round 4</th>
                     <th style={styles.tableHeaderCell}>Round 5</th>
-                    <th style={styles.tableHeaderCell}>Change (R1→R5)</th>
                   </tr>
                 </thead>
                 <tbody style={styles.tableBody}>
@@ -943,18 +944,6 @@ const JosaaRankTrendAnalyzer = () => {
                           </td>
                         );
                       })}
-                      <td style={styles.tableCell}>
-                        {(() => {
-                          const round1 = program.data.find(d => d.Round === 1);
-                          const round5 = program.data.find(d => d.Round === 5);
-                          if (round1 && round5 && round1['Opening Rank'] && round5['Opening Rank']) {
-                            const diff = round1['Opening Rank'] - round5['Opening Rank'];
-                            const percentChange = ((diff / round1['Opening Rank']) * 100).toFixed(1);
-                            return `${diff > 0 ? '+' : ''}${diff.toLocaleString()} (${diff > 0 ? '+' : ''}${percentChange}%)`;
-                          }
-                          return 'N/A';
-                        })()}
-                      </td>
                     </tr>,
                     <tr key={`${program.key}-closing`} style={styles.tableRow}>
                       <td style={styles.tableCell}>Closing</td>
@@ -966,18 +955,6 @@ const JosaaRankTrendAnalyzer = () => {
                           </td>
                         );
                       })}
-                      <td style={styles.tableCell}>
-                        {(() => {
-                          const round1 = program.data.find(d => d.Round === 1);
-                          const round5 = program.data.find(d => d.Round === 5);
-                          if (round1 && round5 && round1['Closing Rank'] && round5['Closing Rank']) {
-                            const diff = round1['Closing Rank'] - round5['Closing Rank'];
-                            const percentChange = ((diff / round1['Closing Rank']) * 100).toFixed(1);
-                            return `${diff > 0 ? '+' : ''}${diff.toLocaleString()} (${diff > 0 ? '+' : ''}${percentChange}%)`;
-                          }
-                          return 'N/A';
-                        })()}
-                      </td>
                     </tr>
                   ])}
                 </tbody>
